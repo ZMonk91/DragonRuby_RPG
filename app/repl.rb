@@ -1,3 +1,15 @@
+
+# Remove the x from xrepl to run the command.
+xrepl do
+  $gtk.help
+end
+
+
+# Remove the x from xrepl to run the command.
+xrepl do
+  args.outputs.labels << [10, 30, args.gtk.current_framerate]
+end
+
 # ===============================================================
 # Welcome to repl.rb
 # ===============================================================
