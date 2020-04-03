@@ -28,6 +28,11 @@ require '/app/settings.rb'
   @show_settings = false
 
 
+def sine_gen(count)
+  count += 600  # Maintains a minimum speed
+  255 * Math.sin($gtk.args.state.tick_count/count).abs
+end
+
 def w_per(percentage_requested)
   return 1280 * (percentage_requested / 100)
 end
@@ -37,6 +42,7 @@ def h_per(percentage_requested)
 end
 
 def timer(desired_time)
+  ## args.state.tick_count / fps %total frames
   return ($gtk.args.state.tick_count / 60 % desired_time).floor
 end
 
@@ -51,7 +57,6 @@ def display_splash_screen
 end
 
 def display_login(x,y)
-  $gtk.args.outputs.labels << [ 175, 150, logged_in?.to_s , 255, 0, 0 ]
   # Login_Box
   $gtk.args.outputs.sprites << [w_per(44), h_per(49), 300, 40, @sprite_graybox,0,50,255,255,255]
   $gtk.args.outputs.sprites << [w_per(45), h_per(50), 30, 30, @sprite_identity]
@@ -64,10 +69,6 @@ def display_login(x,y)
   $gtk.args.outputs.sprites << [w_per(44), h_per(35), 300, 40, @sprite_graybox,0,50,255,255,255]
   $gtk.args.outputs.sprites << [w_per(45), h_per(36), 30, 30, @sprite_gear]
   $gtk.args.outputs.labels << [ w_per(49), h_per(39.5), 'Settings' , 255, 255, 255 ]
-
-  #Mouse Actions
-  # Display Mouse Loc
-  $gtk.args.outputs.labels << [ 10, 80, "#{x},#{y}", 255, 0, 0 ]
 
   # Highlight on Hover
   if x.between?(w_per(44.5), w_per(44) + 294) && y.between?(h_per(49), h_per(49) + 40)
@@ -149,28 +150,33 @@ def fps_30
 end
 
 def render_bg(static)
-  $gtk.args.outputs.sprites << [0, 0, w_per(100), h_per(100), @sprite_loc] unless static
-  $gtk.args.outputs.sprites << [0, 0, w_per(100), h_per(100), @sprite_static_bg] if static
+  $gtk.args.outputs.sprites << [0, 0, w_per(100), h_per(100), @sprite_static_bg,0,255,36,41,46]
+  $gtk.args.outputs.sprites << [0, 0, w_per(100), h_per(100), @sprite_loc,0,255,sine_gen(250),sine_gen(500),sine_gen(750)] unless static
+  # $gtk.args.outputs.sprites << [0, 0, w_per(100), h_per(100), @sprite_static_bg] if static
 
 end
 
 def tick(args)
 
-  # Function Declarations
-  ## counts per sec
-  ## args.state.tick_count / fps %total frames
+  # Useful Snippets
+  ## Display Timer
+  # args.outputs.labels << [ 20, 150, "Timer: #{timer(30)}", 255, 0, 0 ]
 
+  ## Display Mouse Loc
+  # $gtk.args.outputs.labels << [ 10, 80, "#{x},#{y}", 255, 0, 0 ]
 
   # Variable Declarations
   mouse_x = $gtk.args.inputs.mouse.x
   mouse_y = $gtk.args.inputs.mouse.y
 
-  ## Animate BG
+
+  ## SETTINGS
+  ### Animate BG
   @sprite_loc = "/mygame/sprites/bg/bg_#{fps_30}.png"
   render_bg(@system_settings[3][:value]) 
- 
-  # args.outputs.labels << [ 20, 150, "Timer: #{timer(30)}", 255, 0, 0 ]
-
+  ### Display FPS
+  args.outputs.labels << [10, 30, "#{args.gtk.current_framerate} FPS",255,0,0] if @system_settings[0][:value]
+  # args.outputs.labels << [10,50, "#{sine_gen}",255,0,0]
   # Display Splash Screen at startup
   display_splash_screen if args.state.tick_count <= 550 
 
