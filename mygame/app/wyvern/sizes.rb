@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Size
   def self.box(size)
     box_size = [0, 0]

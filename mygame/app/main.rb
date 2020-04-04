@@ -1,9 +1,6 @@
 require '/app/settings.rb'
 require '/app/wyvern/wyvern.rb'
 
-
-
-
 ## Font Locations
   $noto = '/fonts/NotoSans-Regular.ttf'
   $hack_bold = '/fonts/Hack-Bold.ttf'
@@ -165,9 +162,7 @@ def render_game()
   @show_menu = false
   @show_settings = false
 
-  UI.box("extra small","red")
   # UI
-
   ## UI Containers
   ### Left UI Container
   left_ui_container_shadow = [w_per(20), h_per(0), w_per(0.5), h_per(110), @sprite_graybox,0,50,0,100,100]
@@ -175,10 +170,53 @@ def render_game()
   sprites << left_ui_container_shadow
   sprites << left_ui_container
 
+  square1 = UI.box("center_left","xs","indigo")
+  square2 = UI.box("center","xs","red")
+  square3 = UI.box("center_right","xs","green")
+  triangle1 = UI.triangle("bottom_left", "xs", "pink")
+  triangle2 = UI.triangle("bottom_center", "xs", "orange")
+  triangle3 = UI.triangle("bottom_right", "xs", "yellow")
+  circle1 = UI.circle("top_left", "extra small", "red")
+  circle2 = UI.circle("top_center", "extra small", "deep_orange")
+  circle3 = UI.circle("top_right", "extra small", "blue_grey")
+  UI.shadow(square1, 5, "center", 292, "yellow")
+  UI.shadow(square2, 5, "top right", 92, "blue_grey")
+  UI.shadow(square3, 5, "bottom left", 92, "green")
+  UI.shadow(triangle1, 5, "center", 292, "green")
+  UI.shadow(triangle2, 5, "bottom left", 92, "yellow")
+  UI.shadow(triangle3, 5, "top", 182, "red")
+  UI.shadow(circle1, 5, "center", 32, "black")
+  UI.shadow(circle2, 5, "top and bottom", 92, "blue")
+  UI.shadow(circle3, 5, "bottom left", 32, "white")
+sprites << square1
+sprites << square2
+sprites << square3
+sprites << triangle1
+sprites << triangle2
+sprites << triangle3
+sprites << circle1
+sprites << circle2
+sprites << circle3
+
+
+
+
+  # square = UI.box("center","extra small","indigo")
+  # UI.shadow(square, 5, "center", 32, "white")
+  # sprites << square
+ 
+  # circle = UI.circle("center_left", "extra small", "red")
+  # UI.shadow(circle,8, "top and bottom",99,"orange")
+  # sprites << circle
+  
+  # triangle = UI.triangle("bottom_left", "xs", "green")
+  # UI.shadow(triangle,8, "left",99,"grey")
+  # sprites << triangle
+
   ## UI Buttons
   ui_collapse_button = [w_per(16.5), h_per(94), w_per(3), h_per(4), @sprite_graybox,0,250,150,150,150]
-  # sprites << ui_collapse_button
   sprites << [w_per(16.5), h_per(94), w_per(3), h_per(4), @sprite_back_arrow,0,250,250,250,250]
+
 end
 
 def tick(args)
