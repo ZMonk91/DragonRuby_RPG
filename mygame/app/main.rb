@@ -188,11 +188,11 @@ def render_game()
 
     test_box = {
       position: :A0,
-      size: [3,100],
+      size: [3, 100],
       color: :blue,
       alpha: 255,
-      box_shadow: [5,2,4, rgba(165, 124, 156, 99.5)],
-      border: [25, rgba(266, 36, 0, 0)]
+      box_shadow: [5, 2, 4, rgba(165, 124, 156, 99.5)],
+      border: [25, rgba(255, 255, 250, 255)]
 
     }
 
