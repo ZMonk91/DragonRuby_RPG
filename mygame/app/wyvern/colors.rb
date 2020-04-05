@@ -4,28 +4,32 @@
 class Colors
 
   @colors = {
-    red: 'f44336',
-    pink: 'E91E63',
-    purple: '9C27B0',
-    deep_purple: '673AB7',
-    indigo: '3F51B5',
-    blue: '2196F3',
-    light_blue: '03A9F4',
-    cyan: '00BCD4',
-    teal: '009688',
-    green: '4CAF50',
-    light_green: '8BC34A',
-    lime: 'CDDC39',
-    yellow: 'FFEB3B',
-    amber: 'FFC107',
-    orange: 'FF9800',
-    deep_orange: 'FF5722',
-    brown: '795548',
-    grey: '9E9E9E',
-    blue_grey: '607D8B',
-    white: 'FFFFFF',
-    black: '000000'
+    red: [244,67,54],
+    pink: [233,30,99],
+    purple: [156,39,176],
+    deep_purple: [103,58,183],
+    indigo: [63,81,181],
+    blue: [33,150,243],
+    light_blue: [3,169,244],
+    cyan: [0,188,212],
+    teal: [0,150,136],
+    green: [76,175,80],
+    light_green: [139,195,74],
+    lime: [205,220,57],
+    yellow: [255,235,59],
+    amber: [255,193,7],
+    orange: [255,152,0],
+    deep_orange: [255,87,34],
+    brown: [121,85,72],
+    grey: [158,158,158],
+    blue_grey: [96,125,139],
+    white: [255,255,255],
+    black: [0,0,0]
   }
+
+  def self.get_color(color)
+    @colors[color]
+  end
 
   def self.get_rgb(color)
     color = @colors.fetch(color.to_sym)

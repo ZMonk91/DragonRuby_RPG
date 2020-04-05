@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 class Size
+
+  def self.get_size(size_array)
+    new_size = []
+    size_array.each {|size| new_size << size * 16}
+    new_size
+  end
+
   def self.box(size)
     box_size = [0, 0]
     size = size.downcase
@@ -21,4 +28,5 @@ class Size
 
     box_size
   end
+
 end

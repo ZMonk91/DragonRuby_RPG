@@ -1,78 +1,34 @@
 # frozen_string_literal: true
 
 class Shadows
-  def self.create_shadow(obj, size = 0, desired_pos = 'center', alpha = 33, color = 'black')
-    @percentage = (size / 100)
-    
-    case desired_pos
-    when 'center'
-      @x_growth = (obj[2] * @percentage)
-      @y_growth = (obj[3] * @percentage)
-      obj[0] -= @x_growth / 2
-      obj[1] -= @y_growth / 2
-      obj[2] += @x_growth # => Width
-      obj[3] += @y_growth # => Height
-    when 'bottom'
-      @y_growth = (obj[3] * @percentage)
-      obj[1] -= @y_growth
-      obj[3] += @y_growth # => Height
-    when 'top'
-      @y_growth = (obj[3] * @percentage)
-      obj[1] += @y_growth
-      obj[3] += @y_growth # => Height
-    when 'top and bottom'
-      @y_growth = (obj[3] * @percentage)
-      obj[1] -= @y_growth / 2
-      obj[3] += @y_growth # => Height
-    when 'left'
-      @x_growth = (obj[2] * @percentage)
-      obj[0] -= @x_growth
-      obj[2] += @x_growth # => Width
-    when 'right'
-      @x_growth = (obj[2] * @percentage)
-      obj[0] += @x_growth
-      obj[2] += @x_growth # => Width
-    when 'left and right'
-      @x_growth = (obj[2] * @percentage)
-      obj[0] -= @x_growth / 2
-      obj[2] += @x_growth # => Width
-    when 'bottom left'
-      @x_growth = (obj[2] * @percentage)
-      @y_growth = (obj[3] * @percentage)
-      obj[0] -= @x_growth
-      obj[1] -= @y_growth
-      obj[2] += @x_growth # => Width
-      obj[3] += @y_growth # => Height
-    when 'bottom right'
-      @x_growth = (obj[2] * @percentage)
-      @y_growth = (obj[3] * @percentage)
-      obj[0] += @x_growth
-      obj[1] -= @y_growth
-      obj[2] += @x_growth # => Width
-      obj[3] += @y_growth # => Height
-    when 'top left'
-      @x_growth = (obj[2] * @percentage)
-      @y_growth = (obj[3] * @percentage)
-      obj[0] -= @x_growth
-      obj[1] += @y_growth
-      obj[2] += @x_growth # => Width
-      obj[3] += @y_growth # => Height
-    when 'top right'
-      @x_growth = (obj[2] * @percentage)
-      @y_growth = (obj[3] * @percentage)
-      obj[0] += @x_growth
-      obj[1] += @y_growth
-      obj[2] += @x_growth # => Width
-      obj[3] += @y_growth # => Height
-    end
-
-    new_shape = []
-
-    obj[6] = alpha # => Alpha
-    color = Colors.get_rgb(color)
-    obj[7] = color[0] # => R
-    obj[8] = color[1] # => G
-    obj[9] = color[2] # => B
-    obj
+  def self.box_shadow(obj, box_shadow_hash)
+    obj_clone = obj.clone
+    # p box_shadow_hash
+    h_offset = box_shadow_hash[0]
+    v_offset = box_shadow_hash[1]
+    spread = box_shadow_hash[2]
+    colors = box_shadow_hash[3].flatten
+    red = colors[0]
+    green = colors[1]
+    blue = colors[2]
+    alpha = colors[3]
+    obj_clone[0] = get_offset(obj_clone[0],h_offset)
+    obj_clone[1] = get_offset(obj_clone[1],v_offset)
+    obj_clone[2] += box_shadow_hash[2]
+    obj_clone[3] += box_shadow_hash[2]
+    obj_clone[6] = alpha
+    obj_clone[7] = red
+    obj_clone[8] = green
+    obj_clone[9] = blue
+   
+    obj_clone
   end
+
+  def self.get_offset(base, offset)
+    return base += offset
+
+  end
+
+
+
 end
