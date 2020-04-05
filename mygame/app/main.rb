@@ -192,7 +192,12 @@ def render_game()
       color: :blue,
       alpha: 255,
       box_shadow: [5, 2, 4, rgba(165, 124, 156, 99.5)],
-      border: [25, rgba(255, 255, 250, 255)]
+      border: [25, rgba(255, 255, 250, 255)],
+      hover: {
+        color: :red,
+        size: [4, 101],
+        border: [25, rgba(0, 0, 0, 255)]
+      }
 
     }
 
