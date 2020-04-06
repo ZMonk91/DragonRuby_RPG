@@ -20,13 +20,15 @@ class UI
     @shadows_enabled = false
     @valid = false
     ### Default Shadow Options
-    @@shadow_x_offset = 20
-    @@shadow_y_offset = 20
+    @@shadow_x_offset = @position[0] -= 5
+    @@shadow_y_offset = @position[1] -= 5
     @@shadow_spread = [
       @size[0] + 5,
       @size[1] + 8
     ]
-    @@shadow_color = [0,0,0]
+    @@shadow_tilt = 0
+    @@shadow_color = [255,255,255]
+    @@shadow_alpha = 33
 
 
   end
@@ -38,9 +40,25 @@ class UI
     self
   end 
 
+  def shadow_color(color)
+    color = Colors.get_color(color) if color.is_a? Symbol
+    @@shadow_color = color
+    self
+  end
+
+  def shadow_alpha(alpha)
+    @@shadow_alpha = alpha
+    self
+  end
+
   def shadow_offset(offset)
    @@shadow_x_offset = offset[0]
    @@shadow_y_offset = offset[1]
+    self
+  end
+
+  def shadow_tilt(tilt)
+    @@shadow_tilt = tilt
     self
   end
 
@@ -59,7 +77,6 @@ class UI
   def size(size)
     size = Size.get_size(size)
     @size = size
-    # @@size = size
     self
   end
 
@@ -76,7 +93,7 @@ class UI
 
   def render
     check_if_valid
-    # @obj
+    Shadows.render(@obj) if @shadows_enabled
     $gtk.args.outputs.sprites << @obj
   end
 

@@ -3,6 +3,37 @@
 class Shadows < UI
   def class_info; end
 
+  def self.render(obj)
+    obj = obj.clone
+    x_offset = @@shadow_x_offset
+    y_offset = @@shadow_y_offset
+    spread   = @@shadow_spread
+    tilt     = @@shadow_tilt
+    color    = @@shadow_color
+    alpha    = @@shadow_alpha
+
+    shadow_clone = [
+      get_offset(obj[0], x_offset),
+      get_offset(obj[1], y_offset),
+      obj[2] += spread[0],
+      obj[3] += spread[1],
+      obj[4],
+      tilt,
+      alpha,
+      color[0],
+      color[1],
+      color[2]
+    ]
+
+    $gtk.args.outputs.sprites << shadow_clone
+
+
+  end
+
+  def self.get_offset(base, offset)
+    base += offset
+  end
+
 end
 
 ### DEPRECATED

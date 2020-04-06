@@ -13,13 +13,16 @@ def render_game
 
   tester = UI.new
 
-  tester.square
+  tester.circle
             .position([500,220])
             .size([16,16])
             .color(:red)
             .shadow()
-            .shadow_offset([12,0])
+            .shadow_spread([6,6])
+            .shadow_offset([-5,15])
             .render
+
+tester.shadow_color(:pink).render
 
 
             
