@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 # Creates a 16 x 16 grid
 class Grid
@@ -16,3 +15,4 @@ class Grid
     end
   end
 end
+# grid = Grid.create

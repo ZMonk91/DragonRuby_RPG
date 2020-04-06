@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 class Shadows
   def self.box_shadow(obj, box_shadow_hash)
