@@ -23,7 +23,14 @@ class Colors
     grey: [158,158,158],
     blue_grey: [96,125,139],
     white: [255,255,255],
-    black: [0,0,0]
+    black: [0,0,0],
+    dark_grey: [32,35,31],
+    dark: [38,38,38]
+    
+  }
+
+  @material_dark = {
+
   }
 
   def self.get_color(color)

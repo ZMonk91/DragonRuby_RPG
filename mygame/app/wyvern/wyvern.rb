@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 # Fluid Interfaces
+def none
+  false
+end
 
 class UI
   include Enumerable
@@ -14,10 +17,96 @@ class UI
     @colors = [0, 0, 0]
     @position = [0, 0]
     @size = [1, 1]
+    @shadows_enabled = false
     @valid = false
+    ### Default Shadow Options
+    @@shadow_x_offset = 20
+    @@shadow_y_offset = 20
+    @@shadow_spread = [
+      @size[0] + 5,
+      @size[1] + 8
+    ]
+    @@shadow_color = [0,0,0]
+
+
   end
 
-  def circle
+  def shadow(*args)
+    unless args[0] == false
+      @shadows_enabled = true if args.empty?
+    end
+    self
+  end 
+
+  def shadow_offset(offset)
+   @@shadow_x_offset = offset[0]
+   @@shadow_y_offset = offset[1]
+    self
+  end
+
+  def shadow_spread(spread)
+    @@shadow_spread = [spread[0], spread[1]]
+    self
+  end
+
+  def position(position)
+    position = $grid[position] if position.is_a? Symbol
+    @position = position
+    @@position = position
+    self
+  end
+
+  def size(size)
+    size = Size.get_size(size)
+    @size = size
+    # @@size = size
+    self
+  end
+
+  def color(color)
+    color = Colors.get_color(color) if color.is_a? Symbol
+    @colors = color
+    self
+  end
+
+  def tilt(tilt)
+    @tilt = tilt
+    self
+  end
+
+  def render
+    check_if_valid
+    # @obj
+    $gtk.args.outputs.sprites << @obj
+  end
+
+  def check_if_valid
+    if @object_sprite.nil?
+      p "Uh oh. You're missing your object. What shape is this?"
+      p 'Available methods include: .circle, .hexagon, .pentagon'
+      p '.pill, .rectangle_rounded, .rectangle, .square_rounded,'
+      p '.square, .star, .triangle_rounded, .triangle'
+      return
+    else
+      compile
+    end
+    self
+  end
+
+  def compile
+    @obj = [
+      @position.flatten,
+      @size.flatten,
+      @object_sprite,
+      @tilt,
+      @alpha,
+      @colors.flatten
+    ].flatten
+    @obj
+  end
+
+  ### Shapes
+   def circle
     @@object_sprite = Shapes.get_shape(:circle)
     @object_sprite = @@object_sprite
     self
@@ -85,62 +174,6 @@ class UI
     self
   end
 
-  def position(position)
-    position = $grid[position] if position.is_a? Symbol
-    @position = position
-    @@position = position
-    self
-  end
-
-  def size(size)
-    size = Size.get_size(size)
-    @size = size
-    # @@size = size
-    self
-  end
-
-  def color(color)
-    color = Colors.get_color(color) if color.is_a? Symbol
-    @colors = color
-    self
-  end
-
-  def tilt(tilt)
-    @tilt = tilt
-    self
-  end
-
-  def render
-    check_if_valid
-    # @obj
-    $gtk.args.outputs.sprites << @obj
-  end
-
-  def check_if_valid
-    if @object_sprite.nil?
-      p "Uh oh. You're missing your object. What shape is this?"
-      p 'Available methods include: .circle, .hexagon, .pentagon'
-      p '.pill, .rectangle_rounded, .rectangle, .square_rounded,'
-      p '.square, .star, .triangle_rounded, .triangle'
-      return
-    else
-      compile
-    end
-    self
-  end
-
-  def compile
-    @obj = [
-      @position.flatten,
-      @size.flatten,
-      @object_sprite,
-      @tilt,
-      @alpha,
-      @colors.flatten
-    ].flatten
-    @obj
-  end
-
   def serialize; end
 
   def inspect
@@ -152,29 +185,6 @@ class UI
   end
 end
 
-# # Not sure if I need this tbh
-# class Components < UI
-#   def initialize
-#     p 'Initialized'
-#   end
 
-#   def render
-#     p "Building! #{@@position}"
-#     p "Current Sprite: #{@@object_sprite}"
-#     self
-#   end
-# end
-
-# test = UI.new.box
-
-# test.position(:A5).size([0,5]).render
-# p test
-
-# test2 = UI.new
-# test2.box.position([0,4]).size([2,9]).color(:blue).render
-# p test2
-
-# p test
-# p test2
 
 # UI.new(options).box2().with_shadow().primitives
