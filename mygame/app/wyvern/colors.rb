@@ -25,12 +25,18 @@ class Colors
     white: [255,255,255],
     black: [0,0,0],
     dark_grey: [32,35,31],
-    dark: [38,38,38]
-    
+    dark: [38,38,38],
+    ### Material Palette
+    background:[38,38,38],
+    btn_bg: [69, 69, 69],
+    border: [90, 90, 90],
+    highlight: [0,144,129]
+
+
   }
 
   @material_dark = {
-
+    bg: [38,38,38]
   }
 
   def self.get_color(color)
@@ -39,9 +45,7 @@ class Colors
 
   def self.get_rgb(color)
     color = @colors.fetch(color.to_sym)
-    # p color.scan(/../)    ### ===> No Regexp support yet
     color = color.chars.each_slice(2).map(&:join) # => Workaround for the lack of regexp
     color.each_with_index { |x, index| color[index] = x.to_i(16) }
-
   end
 end

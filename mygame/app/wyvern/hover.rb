@@ -8,7 +8,7 @@ class Hover
     border   = args.fetch(:border, nil)
 
     if $gtk.args.inputs.mouse.point.inside_rect? shape
-      
+
       #Change Color
       unless color.nil?
       color = Colors.get_color(color)
@@ -46,7 +46,7 @@ class Hover
       unless border.nil?
         $gtk.args.outputs.borders << Borders.get_border(shape, border)
       end
-      
+
 
 
       # [0, 0, 48, 1600, "mygame/sprites/ui/shapes/rounded_box.png", 0, 255, 33, 150, 243]
@@ -54,3 +54,51 @@ class Hover
 
   end
 end
+
+
+class Foo
+
+  def initialize
+    @clicks_enabled = false
+    @@click_args
+  end
+
+
+  def create_bar
+    @obj = Bar.new
+    self
+  end
+
+  def execute_click_method
+    @obj.click_method{ @@click_args } if @clicks_enabled
+  end
+
+  def get_click_args(&block)
+    @clicks_enabled = true
+    @@click_args = block
+    execute_click_method
+  end
+
+end
+
+# class Bar
+#   @click_args
+
+#   def initialize
+#     @obj = []
+#   end
+
+#   def click_method(&block)
+#     @click_args = block
+#     execute_args { @click_args }
+#   end
+
+#   def execute_args
+#     yield
+#   end
+
+# end
+
+
+# new_obj = Foo.new.create_bar
+# new_obj.get_click_args {puts 'some_methods_here'}
