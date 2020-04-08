@@ -31,11 +31,66 @@ class Sprite
   attr_sprite
 
 
-    @on_click_enabled = false
-    @@class_colors = [122, 0, 0]
-    @@class_position = [200, 200]
+    # @on_click_enabled = false
 
+    # @@class_colors = [1, 244, 0]
+    # @@class_position = [200, 200]
 
+    #   @@class_defaults = {
+    #     color: [0, 0, 122]
+    #   }
+
+      # @single_color = [255,255,255]
+      # @single_pos = [220, 220]
+
+    def initialize(type)
+      @object = {
+        type: type,
+        position: [455, 450],
+        size: [120, 120],
+        sprite: '',
+        tilt: 0,
+        alpha: 0,
+        color: [123, 123, 123],
+        shadows: false,
+        shadow_offset: [20, 20],
+        shadow_spread: 10,
+        shadow_color: [255, 255, 255],
+        shadow_alpha: 0,
+        shadow_tilt: 0,
+        selectable: false
+      }
+      build_obj(type)
+    end
+
+  def build_obj(type)
+    type = type.to_sym
+    component = New_Component.new(type)
+    component.position(@object[:position])
+    component.color(@object[:color])
+    @obj_info = component.update
+    @get_render = component.render
+    self
+  end
+
+  def render
+    arr = @get_render.flatten
+    arr
+  end
+
+  def position(*args)
+    @object[:position] = args
+    build_obj(@object[:type])
+    self
+  end
+
+  def color(*args)
+    @object[:color] = args
+    build_obj(@object[:type])
+    self
+  end
+
+  ### Event Handling
   def hovered?(sprite)
     hover_listener(get_sprite_rect(sprite))
   end
@@ -55,24 +110,9 @@ class Sprite
     self
   end
 
-  def rectangle
-    created_obj = New_Component.new(:rectangle)
-    created_obj.position(@@class_position)
-    created_obj.color(@@class_colors)
-    @obj_info = created_obj.update
-    self
-  end
 
-  def position(*args)
-    @@class_position = args
-    self
-  end
 
-  def color(*args)
-    @@class_colors = args
-    self
-  end
-
+  ### Error Handling
   def serialize
     {}
   end
@@ -96,6 +136,9 @@ class New_Component
     @colors = [0, 255, 0]
     @position = [400, 400]
     @size = [50, 50]
+    @obj_sto = {
+      color: [122, 122, 122]
+    }
   end
 
   def color(*args)
@@ -108,6 +151,17 @@ class New_Component
     update
   end
 
+  def render
+    result = Array.new
+    result.push(@position.flatten,
+      @size[0], @size[1],
+      @object_sprite,
+      @tilt,
+      @alpha,
+      @colors.flatten)
+    result
+  end
+
   def update
     @obj = [
       @position.flatten,
@@ -117,8 +171,7 @@ class New_Component
       @alpha,
       @colors.flatten
     ]
-    sprites << @obj
-    @obj
+    @obj.flatten
   end
 end
 
