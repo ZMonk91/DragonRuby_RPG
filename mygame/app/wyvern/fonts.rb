@@ -1,5 +1,11 @@
 # frozen_string_literal: true
-
+  @fonts = {
+    button: '/app/wyvern/fonts/Raleway-Medium.ttf',
+    body: '/app/wyvern/fonts/Raleway-Regular.ttf',
+    headline: '/app/wyvern/fonts/Roboto-Light.ttf',
+    subtitle: '/app/wyvern/fonts/Roboto-Regular.ttf',
+    runes: '/app/wyvern/fonts/runes.ttf'
+  }
 # Fonts
 class Fonts
   attr_sprite
@@ -8,7 +14,8 @@ class Fonts
     button: '/app/wyvern/fonts/Raleway-Medium.ttf',
     body: '/app/wyvern/fonts/Raleway-Regular.ttf',
     headline: '/app/wyvern/fonts/Roboto-Light.ttf',
-    subtitle: '/app/wyvern/fonts/Roboto-Regular.ttf'
+    subtitle: '/app/wyvern/fonts/Roboto-Regular.ttf',
+    runes: '/app/wyvern/fonts/runes.ttf'
   }
 
   def initialize
@@ -25,10 +32,25 @@ class Fonts
     @size = arg
     self
   end
+  
+  def alpha(arg)
+    @alpha = arg
+    self
+  end
+
+  def alignment(arg)
+    @alignment = arg
+    self
+  end
+
 
   def position(pos)
     @position = pos
     self
+  end
+
+  def get_font(style)
+    @@fonts[style]
   end
 
   def font_style(style)
