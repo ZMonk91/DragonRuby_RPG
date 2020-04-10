@@ -20,3 +20,7 @@ class Shapes
   end
   
 end
+
+@trees = {
+  normal: '/app/wyvern/sprites/game/wc/normal_tree.png'
+}

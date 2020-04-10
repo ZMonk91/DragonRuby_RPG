@@ -27,10 +27,13 @@ class Colors
     dark_grey: [32,35,31],
     dark: [38,38,38],
     ### Material Palette
-    background:[38,38,38],
-    btn_bg: [69, 69, 69],
+    background:[18,18,18],
+    btn_bg: [29, 29, 29],
+    btn_1: [34,34,34],
+    btn_2: [36, 36, 36],
+    primary: [0,144,129],
     border: [90, 90, 90],
-    highlight: [0,144,129]
+    secondary: [187, 134, 252]
 
 
   }
