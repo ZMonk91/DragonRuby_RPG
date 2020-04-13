@@ -26,6 +26,7 @@ class Colors
     black: [0,0,0],
     dark_grey: [32,35,31],
     dark: [38,38,38],
+
     ### Material Palette
     background:[18,18,18],
     btn_bg: [29, 29, 29],
@@ -34,8 +35,6 @@ class Colors
     primary: [0,144,129],
     border: [90, 90, 90],
     secondary: [187, 134, 252]
-
-
   }
 
   @material_dark = {

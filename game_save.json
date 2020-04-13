@@ -1,0 +1,1 @@
+{:player=>{:username=>"Default Username", :level=>nil, :total_xp=>3, :gold=>0}, :inventory=>{"Normal Logs"=>1}, :game_stats=>{:time_played=>0, :died=>0}}
